@@ -34,7 +34,7 @@ public class ItemGenerator : MonoBehaviour
 
  
         // はじめ45m分アイテムを作成
-        randomItemMake(startPos, startPos + itemMakeLength);
+        MakeRandomItem(startPos, startPos + itemMakeLength);
 
     }
 
@@ -45,12 +45,12 @@ public class ItemGenerator : MonoBehaviour
            && goalPos - itemMakePosUpd > 10           
            ) {
             //Debug.Log(itemMakePosUpd);
-            randomItemMake(itemMakePosUpd, itemMakePosUpd + 5);
+            MakeRandomItem(itemMakePosUpd, itemMakePosUpd + 5);
         }
     }
 
     // 
-    private void randomItemMake (int makeStartPos, int makeEndPos) {
+    private void MakeRandomItem (int makeStartPos, int makeEndPos) {
         
         for (int i = makeStartPos; i < makeEndPos; i += 5) {
             int num = Random.Range(0, 30);

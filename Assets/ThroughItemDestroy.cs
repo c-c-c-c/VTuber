@@ -18,7 +18,7 @@ public class ThroughItemDestroy : MonoBehaviour {
 	void Update () {
         this.unitychan_pos = this.unitychan.transform.position.z;
 
-        if (this.unitychan_pos > this.transform.position.z) {
+        if (this.unitychan_pos > this.transform.position.z + 5) {
             Destroy(this.gameObject);
         }
 	}
