@@ -14,7 +14,7 @@ public class UnityChanController : MonoBehaviour {
     private float forwardForce = 800.0f;
 
     //左右に移動するための力（
-    private float turnForce = 500.0f;
+    private float turnForce = 50.0f;
 
     //ジャンプするための力（
     private float upForce = 500.0f;
@@ -63,7 +63,7 @@ public class UnityChanController : MonoBehaviour {
 
     // Update is called once per frame
     void Update () {
-        this.myRigidbody.AddForce(this.transform.forward * this.forwardForce);
+        //this.myRigidbody.AddForce(this.transform.forward * this.forwardForce);
         //this.myRigidbody.AddForce(this.transform.forward * this.forwardForce);
 
         //ゲーム終了ならUnityちゃんの動きを減衰する
@@ -79,12 +79,12 @@ public class UnityChanController : MonoBehaviour {
         if ( (Input.GetKey(KeyCode.LeftArrow) || this.isLButtonDown) && -this.movableRange < this.transform.position.x)
         {
             //左に移動
-            this.myRigidbody.AddForce(-this.turnForce, 0, 0);
+            this.myRigidbody.AddForce(this.turnForce, 0, 0);
         }
         else if (( Input.GetKey(KeyCode.RightArrow)|| this.isRButtonDown) && this.transform.position.x < this.movableRange)
         {
             // 右に移動
-            this.myRigidbody.AddForce(this.turnForce, 0, 0);
+            this.myRigidbody.AddForce(-this.turnForce, 0, 0);
         }
 
         //Jumpステートの場合はJumpにfalseをセットする
@@ -100,6 +100,15 @@ public class UnityChanController : MonoBehaviour {
             this.myAnimator.SetBool("Jump", true);
             //Unityちゃんに上方向の力を加える
             this.myRigidbody.AddForce(this.transform.up * this.upForce);
+        }
+
+        //下ボタンが押される
+        if (Input.GetKeyDown(KeyCode.DownArrow)) {
+            this.myAnimator.SetBool("Next", true);
+        }
+        if (Input.GetKeyUp(KeyCode.DownArrow))
+        {
+            this.myAnimator.SetBool("Next", false);
         }
 
     }
@@ -167,5 +176,8 @@ public class UnityChanController : MonoBehaviour {
     {
         this.isRButtonDown = false;
     }
+
+
+
 
 }
