@@ -111,6 +111,56 @@ public class UnityChanController : MonoBehaviour {
             this.myAnimator.SetBool("Next", false);
         }
 
+        //Lボタンが押される
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+            this.myAnimator.SetBool("LOSE00", true);
+        }
+        if (Input.GetKeyUp(KeyCode.L))
+        {
+            this.myAnimator.SetBool("LOSE00", false);
+        }
+
+        //Wボタンが押される
+        if (Input.GetKeyDown(KeyCode.W))
+        {
+            this.myAnimator.SetBool("WAIT02", true);
+        }
+        if (Input.GetKeyUp(KeyCode.W))
+        {
+            this.myAnimator.SetBool("WAIT02", false);
+        }
+
+        //Hボタンが押される(Hello)
+        if (Input.GetKeyDown(KeyCode.H))
+        {
+            this.myAnimator.SetBool("WAIT03", true);
+            print ("cameh");
+        }
+        if (Input.GetKeyUp(KeyCode.H))
+        {
+            this.myAnimator.SetBool("WAIT03", false);
+        }
+
+        //Rボタンが押される
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            this.myAnimator.SetBool("REFLESH00", true);
+        }
+        if (Input.GetKeyUp(KeyCode.R))
+        {
+            this.myAnimator.SetBool("REFLESH00", false);
+        }
+
+        //Vボタンが押される(Victory)
+        if (Input.GetKeyDown(KeyCode.V))
+        {
+            this.myAnimator.SetBool("WIN00", true);
+        }
+        if (Input.GetKeyUp(KeyCode.V))
+        {
+            this.myAnimator.SetBool("WIN00", false);
+        }
     }
 
     //トリガーモードで他のオブジェクトと接触した場合の処理
