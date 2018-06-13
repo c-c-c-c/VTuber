@@ -94,21 +94,26 @@ public class UnityChanController : MonoBehaviour {
 
         }
 
-        if (Input.GetKeyDown(KeyCode.LeftArrow))
+        //if (Input.GetKeyDown(KeyCode.LeftArrow) && this.myAnimator.GetBool("WALKLEFT") == false)
+        if (Input.GetKeyDown(KeyCode.LeftArrow) )
         {
             this.myAnimator.SetBool("WALKLEFT", true);
+            this.myAnimator.SetBool("WALKINGLEFT", true);
 
         }
 
-        if (Input.GetKeyDown(KeyCode.RightArrow))
+        if (Input.GetKeyDown(KeyCode.RightArrow) && this.myAnimator.GetBool("WALKRIGHT") == false)
         {
             this.myAnimator.SetBool("WALKRIGHT", true);
+            this.myAnimator.SetBool("WALKINGRIGHT", true);
             print("right");
         }
 
         if ( (Input.GetKeyUp(KeyCode.LeftArrow)) || (Input.GetKeyUp(KeyCode.RightArrow)) ) {
             this.myAnimator.SetBool("WALKLEFT", false);
             this.myAnimator.SetBool("WALKRIGHT", false);
+            this.myAnimator.SetBool("WALKINGLeft", false);
+            this.myAnimator.SetBool("WALKINGRIGHT", false);
         }
 
         //Jumpステートの場合はJumpにfalseをセットする
@@ -148,42 +153,31 @@ public class UnityChanController : MonoBehaviour {
         //Wボタンが押される
         if (Input.GetKeyDown(KeyCode.W))
         {
-            this.myAnimator.SetBool("WAIT02", true);
+            this.myAnimator.SetTrigger("WAIT02");
+            print("W");
         }
-        if (Input.GetKeyUp(KeyCode.W))
-        {
-            this.myAnimator.SetBool("WAIT02", false);
-        }
+        //if (Input.GetKeyUp(KeyCode.W))
+        //{
+        //    this.myAnimator.SetBool("WAIT02", false);
+        //}
 
         //Hボタンが押される(Hello)
         if (Input.GetKeyDown(KeyCode.H))
         {
-            this.myAnimator.SetBool("WAIT03", true);
-            print ("cameh");
-        }
-        if (Input.GetKeyUp(KeyCode.H))
-        {
-            this.myAnimator.SetBool("WAIT03", false);
+            this.myAnimator.SetTrigger("WAIT03");
+
         }
 
         //Rボタンが押される
         if (Input.GetKeyDown(KeyCode.R))
         {
-            this.myAnimator.SetBool("REFLESH00", true);
-        }
-        if (Input.GetKeyUp(KeyCode.R))
-        {
-            this.myAnimator.SetBool("REFLESH00", false);
+            this.myAnimator.SetTrigger("REFLESH00");
         }
 
         //Vボタンが押される(Victory)
         if (Input.GetKeyDown(KeyCode.V))
         {
-            this.myAnimator.SetBool("WIN00", true);
-        }
-        if (Input.GetKeyUp(KeyCode.V))
-        {
-            this.myAnimator.SetBool("WIN00", false);
+            this.myAnimator.SetTrigger("WIN00");
         }
     }
 
