@@ -79,12 +79,36 @@ public class UnityChanController : MonoBehaviour {
         if ( (Input.GetKey(KeyCode.LeftArrow) || this.isLButtonDown) && -this.movableRange < this.transform.position.x)
         {
             //左に移動
-            this.myRigidbody.AddForce(this.turnForce, 0, 0);
+            this.myRigidbody.AddForce(0, 0, this.turnForce);
+            //if (this.myAnimator.GetBool("WALKLEFT") != true ) { 
+            //    this.myAnimator.SetBool("WALKLEFT", true);
+            //    print("hoge");
+            //}
         }
         else if (( Input.GetKey(KeyCode.RightArrow)|| this.isRButtonDown) && this.transform.position.x < this.movableRange)
         {
             // 右に移動
-            this.myRigidbody.AddForce(-this.turnForce, 0, 0);
+            this.myRigidbody.AddForce(0, 0, -this.turnForce);
+            //this.myAnimator.SetBool("WALKRIGHT", true);
+            //if (this.myAnimator.GetBool("WALKRIGHT") != true) { this.myAnimator.SetBool("WALKRIGHT", true); }
+
+        }
+
+        if (Input.GetKeyDown(KeyCode.LeftArrow))
+        {
+            this.myAnimator.SetBool("WALKLEFT", true);
+
+        }
+
+        if (Input.GetKeyDown(KeyCode.RightArrow))
+        {
+            this.myAnimator.SetBool("WALKRIGHT", true);
+            print("right");
+        }
+
+        if ( (Input.GetKeyUp(KeyCode.LeftArrow)) || (Input.GetKeyUp(KeyCode.RightArrow)) ) {
+            this.myAnimator.SetBool("WALKLEFT", false);
+            this.myAnimator.SetBool("WALKRIGHT", false);
         }
 
         //Jumpステートの場合はJumpにfalseをセットする
@@ -93,7 +117,7 @@ public class UnityChanController : MonoBehaviour {
             this.myAnimator.SetBool("Jump", false);
         }
 
-        //ジャンプしてないときにスペースが押されたら、ジャンプする 
+        //ジャンプしてないときにスペースが押されたら、ジャンプする
         if (Input.GetKeyDown(KeyCode.Space) && this.transform.position.y < 0.5f)
         {
             //ジャンプアニメを再生
