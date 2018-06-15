@@ -10,18 +10,29 @@ public class MyCameraController : MonoBehaviour {
     //Unityちゃんとカメラの距離
     private float difference;
 
+
 	// Use this for initialization
 	void Start () {
         ////Unityちゃんのオブジェクトを取得
         this.unitychan = GameObject.Find("unitychan");
         ////Unityちゃんとカメラの位置
         this.difference = unitychan.transform.position.z - this.transform.position.z;
-	}
+
+    
+    }
 	
 	// Update is called once per frame
 	void Update () {
 
-        if (Input.GetKeyDown(KeyCode.C))
+        if (Input.GetKey(KeyCode.C) && Input.GetKey(KeyCode.Alpha0)) {
+            //Vector3 cameraDefaultPosition = new Vector3(); 
+            //Vector3 cameraDefaultRotate = new Vector3();
+            this.transform.position = new Vector3(-7.630383f, 2.75751f, 0.4276022f);
+            this.transform.rotation = Quaternion.Euler(-184, 258, 180);
+
+        }
+
+        if (Input.GetKey(KeyCode.C) && Input.GetKey(KeyCode.Alpha1) )
         {
             Vector3 unitychanFacePosition = unitychan.transform.position;
             unitychanFacePosition.y += 2.2f;
@@ -30,5 +41,7 @@ public class MyCameraController : MonoBehaviour {
             this.transform.position = new Vector3(-3.6f, 1.8f, this.unitychan.transform.position.z - 1.1f);
             this.transform.LookAt(unitychanFacePosition);
         }
+
+
 	}
 }
