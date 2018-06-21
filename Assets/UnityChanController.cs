@@ -43,9 +43,18 @@ public class UnityChanController : MonoBehaviour {
     //右ボタン押下の判定
     private bool isRButtonDown = false;
 
+    //左ボタン押下の判定
+    private bool isLButtonUp = false;
+    //右ボタン押下の判定
+    private bool isRButtonUp = false;
+
+    //ポーズの判定
+    private string poseButton;
+
 	// Use this for initialization
 	void Start () {
 
+        print("hoge");
         //Animatorコンポーネントを取得
         this.myAnimator = GetComponent<Animator>();
 
@@ -80,6 +89,7 @@ public class UnityChanController : MonoBehaviour {
         {
             //左に移動
             this.myRigidbody.AddForce(0, 0, this.turnForce);
+            this.myAnimator.SetBool("WALKLEFT", true);
             //if (this.myAnimator.GetBool("WALKLEFT") != true ) { 
             //    this.myAnimator.SetBool("WALKLEFT", true);
             //    print("hoge");
@@ -89,31 +99,38 @@ public class UnityChanController : MonoBehaviour {
         {
             // 右に移動
             this.myRigidbody.AddForce(0, 0, -this.turnForce);
+            this.myAnimator.SetBool("WALKRIGHT", true);
+            print("walkright");
             //this.myAnimator.SetBool("WALKRIGHT", true);
             //if (this.myAnimator.GetBool("WALKRIGHT") != true) { this.myAnimator.SetBool("WALKRIGHT", true); }
 
         }
 
         //if (Input.GetKeyDown(KeyCode.LeftArrow) && this.myAnimator.GetBool("WALKLEFT") == false)
-        if (Input.GetKeyDown(KeyCode.LeftArrow) )
-        {
-            this.myAnimator.SetBool("WALKLEFT", true);
-            this.myAnimator.SetBool("WALKINGLEFT", true);
+        //if (Input.GetKeyDown(KeyCode.LeftArrow) )
+        //{
+        //    this.myAnimator.SetBool("WALKLEFT", true);
+        //    this.myAnimator.SetBool("WALKINGLEFT", true);
 
-        }
+        //}
 
-        if (Input.GetKeyDown(KeyCode.RightArrow) && this.myAnimator.GetBool("WALKRIGHT") == false)
-        {
-            this.myAnimator.SetBool("WALKRIGHT", true);
-            this.myAnimator.SetBool("WALKINGRIGHT", true);
-            print("right");
-        }
+        //if (Input.GetKeyDown(KeyCode.RightArrow) && this.myAnimator.GetBool("WALKRIGHT") == false)
+        //{
+        //    this.myAnimator.SetBool("WALKRIGHT", true);
+        //    this.myAnimator.SetBool("WALKINGRIGHT", true);
+        //}
 
-        if ( (Input.GetKeyUp(KeyCode.LeftArrow)) || (Input.GetKeyUp(KeyCode.RightArrow)) ) {
+        //if ( (Input.GetKeyUp(KeyCode.LeftArrow)) || (Input.GetKeyUp(KeyCode.RightArrow) )||
+                                                     //(isLButtonDown == false) || (isRButtonDown == false) 
+        if ( (Input.GetKeyUp(KeyCode.LeftArrow)) || (Input.GetKeyUp(KeyCode.RightArrow) ||isLButtonUp == true || isRButtonUp == true)
+           
+           ) {
             this.myAnimator.SetBool("WALKLEFT", false);
             this.myAnimator.SetBool("WALKRIGHT", false);
             this.myAnimator.SetBool("WALKINGLeft", false);
             this.myAnimator.SetBool("WALKINGRIGHT", false);
+            isLButtonUp = false;
+            isRButtonUp = false;
         }
 
         //Jumpステートの場合はJumpにfalseをセットする
@@ -123,38 +140,32 @@ public class UnityChanController : MonoBehaviour {
         }
 
         //ジャンプしてないときにスペースが押されたら、ジャンプする
-        if (Input.GetKeyDown(KeyCode.Space) && this.transform.position.y < 0.5f)
-        {
-            //ジャンプアニメを再生
-            this.myAnimator.SetBool("Jump", true);
-            //Unityちゃんに上方向の力を加える
-            this.myRigidbody.AddForce(this.transform.up * this.upForce);
-        }
+        //if (Input.GetKeyDown(KeyCode.Space) && this.transform.position.y < 0.5f)
+        //{
+        //    //ジャンプアニメを再生
+        //    this.myAnimator.SetBool("Jump", true);
+        //    //Unityちゃんに上方向の力を加える
+        //    this.myRigidbody.AddForce(this.transform.up * this.upForce);
+        //}
 
-        //下ボタンが押される
-        if (Input.GetKeyDown(KeyCode.DownArrow)) {
-            this.myAnimator.SetBool("Next", true);
-        }
-        if (Input.GetKeyUp(KeyCode.DownArrow))
-        {
-            this.myAnimator.SetBool("Next", false);
-        }
+ 
 
         //Lボタンが押される
-        if (Input.GetKeyDown(KeyCode.L))
+        if (Input.GetKeyDown(KeyCode.L) || poseButton == "L")
         {
             this.myAnimator.SetBool("LOSE00", true);
+            this.poseButton = ""; 
         }
-        if (Input.GetKeyUp(KeyCode.L))
-        {
-            this.myAnimator.SetBool("LOSE00", false);
-        }
+        //if (Input.GetKeyUp(KeyCode.L))
+        //{
+        //    this.myAnimator.SetBool("LOSE00", false);
+        //}
 
         //Wボタンが押される
-        if (Input.GetKeyDown(KeyCode.W))
+        if (Input.GetKeyDown(KeyCode.W) || poseButton == "W")
         {
             this.myAnimator.SetTrigger("WAIT02");
-            print("W");
+            this.poseButton = ""; 
         }
         //if (Input.GetKeyUp(KeyCode.W))
         //{
@@ -162,23 +173,28 @@ public class UnityChanController : MonoBehaviour {
         //}
 
         //Hボタンが押される(Hello)
-        if (Input.GetKeyDown(KeyCode.H))
+        if (Input.GetKeyDown(KeyCode.H) || poseButton == "H")
         {
             this.myAnimator.SetTrigger("WAIT03");
-
+            print("came");
+            this.poseButton = ""; 
         }
 
         //Rボタンが押される
-        if (Input.GetKeyDown(KeyCode.R))
+        if (Input.GetKeyDown(KeyCode.R) )
         {
             this.myAnimator.SetTrigger("REFLESH00");
+            this.poseButton = ""; 
         }
 
         //Vボタンが押される(Victory)
-        if (Input.GetKeyDown(KeyCode.V))
+        if (Input.GetKeyDown(KeyCode.V) || poseButton == "V")
         {
             this.myAnimator.SetTrigger("WIN00");
+            this.poseButton = ""; 
         }
+
+
     }
 
     //トリガーモードで他のオブジェクトと接触した場合の処理
@@ -213,15 +229,15 @@ public class UnityChanController : MonoBehaviour {
     }
 
 
-    //ジャンプボタンを押した場合の処理（追加）
-    public void GetMyJumpButtonDown()
-    {
-        if (this.transform.position.y < 0.5f)
-        {
-            this.myAnimator.SetBool("Jump", true);
-            this.myRigidbody.AddForce(this.transform.up * this.upForce);
-        }
-    }
+    ////ジャンプボタンを押した場合の処理（追加）
+    //public void GetMyJumpButtonDown()
+    //{
+    //    if (this.transform.position.y < 0.5f)
+    //    {
+    //        this.myAnimator.SetBool("Jump", true);
+    //        this.myRigidbody.AddForce(this.transform.up * this.upForce);
+    //    }
+    //}
 
     //左ボタンを押し続けた場合の処理（追加）
     public void GetMyLeftButtonDown()
@@ -231,6 +247,7 @@ public class UnityChanController : MonoBehaviour {
     //左ボタンを離した場合の処理（追加）
     public void GetMyLeftButtonUp()
     {
+        this.isLButtonUp = true;
         this.isLButtonDown = false;
     }
 
@@ -242,9 +259,33 @@ public class UnityChanController : MonoBehaviour {
     //右ボタンを離した場合の処理（追加）
     public void GetMyRightButtonUp()
     {
+        this.isRButtonUp = true;
         this.isRButtonDown = false;
     }
 
+
+    //やったーボタン
+    public void GetMyPoseVictory()
+    {
+        this.poseButton = "V"; 
+    }
+
+    //負けたボタン
+    public void GetMyPoseLose()
+    {
+        this.poseButton = "L";
+    }
+
+    //ハローボタン
+    public void GetMyPoseHello()
+    {
+        this.poseButton = "H";
+    }
+    //るんるんwaitボタン
+    public void GetMyPoseWait()
+    {
+        this.poseButton = "W";
+     }
 
 
 
